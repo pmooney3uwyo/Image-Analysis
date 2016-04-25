@@ -1,0 +1,18 @@
+# The following script will crop all .tif files located in the current working directory, without regard to image size.  
+# Here I have provided an example of how to define the current working directory: os.chdir('/users/paultmooney/desktop/20160424 laptop/test images')
+# The original image is divided in half along its vertical axis and both halves are saved as new files.  
+# An example of the application of this script would be to separate donor, acceptor, and raw FRET channel images acquired using simultaneous imaging systems (e.g. Photometrics DualView 2) during FRET microscopy.
+
+from PIL import Image
+import glob
+import os
+os.chdir('.')
+listofimages = glob.glob('*.tif')
+for images in listofimages:
+    (name, extension) = os.path.splitext(images)
+    (width, height) = im.size
+    halfwidth = width//2
+    leftcroppedimages = im.crop((0,0,halfwidth,height))
+    rightcroppedimages = im.crop((halfwidth,0,height,height))
+    leftcroppedimages.save(name + '_leftcrop' + '.tif')
+    rightcroppedimages.save(name + '_rightcrop' + '.tif')

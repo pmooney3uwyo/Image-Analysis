@@ -1,0 +1,24 @@
+# The following script will modify all .tif images in a given folder such that they are divided in half along their vertical axis.
+# To use this script you need to edit line #8 such that it corresponds with the location of your .tif images
+# An example of the application of this script would be to separate donor, acceptor, and raw FRET channel images acquired using simultaneous imaging systems (e.g. Photometrics DualView 2) during FRET microscopy.
+
+from PIL import Image
+import glob
+import os
+dirname = '/users/paultmooney/desktop/20160424 laptop/test images'
+os.chdir(dirname)
+listofimages = glob.glob('*.tif')
+im = Image.open(images)
+for images in listofimages:
+    (name, extension) = os.path.splitext(images)
+    folder = name + '_cropped'
+    os.mkdir(folder)
+    (width, height) = im.size
+    halfwidth = width//2
+    leftcroppedimages = im.crop((0,0,halfwidth,height))
+    rightcroppedimages = im.crop((halfwidth,0,height,height))
+    leftcroppedimages.save((os.path.join(folder, name + '_leftcrop' + '.tif')))
+    rightcroppedimages.save((os.path.join(folder, name + '_rightcrop' + '.tif')))
+
+   
+   
